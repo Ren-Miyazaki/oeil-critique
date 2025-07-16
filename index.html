@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Critiques de Films & Séries</title>
+		<meta
+			name="description"
+			content="Découvrez des critiques de films et séries générées avec passion."
+		/>
+		<link rel="stylesheet" href="static/css/style.css" />
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 2rem;
+				background-color: #f9f9f9;
+				color: #333;
+			}
+			h1 {
+				text-align: center;
+			}
+			.critique {
+				border-bottom: 1px solid #ccc;
+				padding: 1rem 0;
+			}
+			.critique img {
+				max-width: 200px;
+				float: left;
+				margin-right: 1rem;
+			}
+			.critique h2 {
+				margin-top: 0;
+			}
+			.clear {
+				clear: both;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Critiques à la une</h1>
+		<div id="critique-list"></div>
+
+		<script>
+			fetch("static/data/critiques.json")
+				.then((res) => res.json())
+				.then((data) => {
+					const container = document.getElementById("critique-list");
+
+					data.slice(0, 10).forEach((critique) => {
+						const div = document.createElement("div");
+						div.className = "critique";
+						div.innerHTML = `
+            <img src="${critique.image}" alt="${critique.title}">
+            <h2><a href="generated/${critique.slug}">${critique.title}</a></h2>
+            <p>${critique.desc}</p>
+            <div class="clear"></div>
+          `;
+						container.appendChild(div);
+					});
+				});
+		</script>
+	</body>
+</html>
